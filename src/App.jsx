@@ -2,81 +2,22 @@
 import { itemData } from "/src/assets/dataFiles/itemData.js";
 import { godData } from "/src/assets/dataFiles/godData.js";
 import React, { useRef, useState } from "react";
+import GodIcon from "./godIcon.jsx";
+import ItemBox from "./itemBox";
+import ItemBuild from "./itemBuild";
+import GodBox from "./godBox.jsx";
+import GodBuffs from "./godBuffs.jsx";
 
-var items = [];
-var gods = [];
+let items = [];
+let gods = [];
 
-for (var god of godData) {
+for (let god of godData) {
 	gods.push(god);
 }
 
-for (var item of itemData) {
+for (let item of itemData) {
 	items.push(item);
 }
-
-
-
-function ItemBox(props) {
-	return (
-			<div className="item" data-tooltip={props.stats} data-name={props.name}>
-				<img
-					onClick={() => {
-						props.updateIcon(props.icon);
-						props.hideShow();
-					}}
-					src={props.icon}></img>
-			</div>
-	);
-}
-
-function GodBuffs(props){
-    return (
-        <div className='buff' data-tooltip={props.stats} data-name ={props.name}>
-            <img id={props.name} src="/src/assets/icons/selectorImage.webp"></img>
-        </div>
-    );
-} 
-
-function GodBox(props){
-    return (
-        <div className='god'>
-            <img src={props.icon}></img>
-        </div>
-    );}
-
-function ItemBuild(props) {
-	return (
-			<div data-tooltip={props.stats} data-name={props.name}>
-				<img
-					className="itemBuild"
-					src="/src/assets/icons/selectorImage.webp"
-					onClick={() => {
-						props.updateSlot(props.slot);
-						props.hideShow();
-					}}></img>
-			</div>
-	);
-}
-
-function abilityLoadout(props){
-    return (
-        <>
-        <div>
-            <img id ={props.abilitySlot} className ='abilityLoadout' style="display: none;" src="" onclick="removeAbility(this,1)"/>
-            <input className='abilityLoadoutForm' type="hidden" name="abilityOne" id='abilityOneForm' value=""/>
-            <div class="results"></div>
-        </div>
-        </>
-    );
-} 
-
-function GodIcon(){
-
-    return (
-        <div className='god'>
-        <img id='godImage' src="/src/assets/icons/selectorImage.webp"></img>
-        </div>
-    );}
 
 function App() {
 	const overlayRef = useRef();
@@ -92,28 +33,28 @@ function App() {
 	}
 
 	//Component Arrays
-	var itemComponents = [];
-	var godComponents = [];
-	var buildComponents = [];
-	var buffComponents = [];
+	let itemComponents = [];
+	let godComponents = [];
+	let buildComponents = [];
+	let buffComponents = [];
 
 	//Component Array Creators
-	for (var i = 0; i < 6; i++) {
+	for (let i = 0; i < 6; i++) {
 		buffComponents.push(<GodBuffs></GodBuffs>);
 	}
 
-	for (var i = 0; i < 7; i++) {
+	for (let i = 0; i < 7; i++) {
 		buildComponents.push(<ItemBuild hideShow={hideShow} slot={i} updateSlot={updateSlot}></ItemBuild>);
 	}
 
-	for (var god of gods) {
+	for (let god of gods) {
 		godComponents.push(<GodBox icon={god["icon"]} />);
 	}
 
-	for (var item of items) {
+	for (let item of items) {
 		if (item["tags"].includes("Consumable") != true) {
-			var statString = "";
-			for (var stat in item["stats"]) {
+			let statString = "";
+			for (let stat in item["stats"]) {
 				statString += stat + ":";
 				statString += " " + item["stats"][stat] + "\n";
 			}
